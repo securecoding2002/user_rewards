@@ -39,10 +39,16 @@ public class RewardsService {
                         TreeMap::new,
                         Collectors.summingDouble(TransactionEntity::getRewards)));
 
-       return RewardSummaryV1.builder()
+       RewardSummaryV1 summary = RewardSummaryV1.builder()
                .userId(userId)
                .rewardDetails(rewardsByMonth)
+               .totalRewards(0.0)
                .build();
-
+       if(!rewardsByMonth.isEmpty()) {
+           summary.setStartDate(rewardsByMonth.firstKey());
+           summary.setEndDate(rewardsByMonth.lastKey());
+           summary.setTotalRewards(rewardsByMonth.values().stream().mapToDouble(Double::doubleValue).sum());
+       }
+       return summary;
     }
 }

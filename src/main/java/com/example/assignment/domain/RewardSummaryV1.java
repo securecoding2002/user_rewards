@@ -16,16 +16,4 @@ public class RewardSummaryV1 {
     private YearMonth endDate;
     private Double totalRewards;
     private TreeMap<YearMonth, Double> rewardDetails;
-
-    public YearMonth getStartDate() {
-        return rewardDetails.firstKey();
-    }
-
-    public YearMonth getEndDate() {
-        return rewardDetails.lastKey();
-    }
-
-    public Double getTotalRewards() {
-        return rewardDetails.values().stream().mapToDouble(Double::doubleValue).sum();
-    }
 }
