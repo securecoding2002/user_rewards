@@ -1,0 +1,6 @@
+userId,amount,date
+id1,200,07-Jun-2022
+id1,100,09-Jun-2022
+id1,300,13-Jun-2022
+id1,1600,13-Aug-2022
+id2,100,13-Aug-2022
