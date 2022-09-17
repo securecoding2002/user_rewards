@@ -7,4 +7,6 @@ spring:
         password: sa
 data:
     load:
+        user-input: input/users_test.txt
+        transaction-input: input/transactions_test.txt
         enabled: true
