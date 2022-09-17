@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.example.assignment.AssignmentSpringTest;
-import com.example.assignment.domain.RewardSummaryV1;
+import com.example.assignment.domain.RewardSummary;
 import com.example.assignment.entity.TransactionEntity;
 import com.example.assignment.entity.UserEntity;
 import java.time.LocalDate;
@@ -24,7 +24,7 @@ public class RewardServiceTest {
   public void getRewards_NoTransaction_ReturnEmptyRewards() {
     UserEntity userEntity = UserEntity.builder().userId("id").userName("name").build();
     when(userService.findByUserId("id")).thenReturn(Optional.of(userEntity));
-    RewardSummaryV1 summary = rewardsService.getRewards("id");
+    RewardSummary summary = rewardsService.getRewards("id");
     assertEquals(0, summary.getTotalRewards());
     assertEquals(userEntity.getUserId(), summary.getUserId());
   }
@@ -47,7 +47,7 @@ public class RewardServiceTest {
     UserEntity userEntity =
         UserEntity.builder().userId("id").userName("name").transactions(transactions).build();
     when(userService.findByUserId("id")).thenReturn(Optional.of(userEntity));
-    RewardSummaryV1 summary = rewardsService.getRewards("id");
+    RewardSummary summary = rewardsService.getRewards("id");
     assertEquals(250.0, summary.getTotalRewards());
     assertEquals(userEntity.getUserId(), summary.getUserId());
   }

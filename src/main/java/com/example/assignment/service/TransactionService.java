@@ -2,7 +2,7 @@ package com.example.assignment.service;
 
 import com.example.assignment.entity.TransactionEntity;
 import com.example.assignment.entity.UserEntity;
-import com.example.assignment.exception.ResourceNotFoundException;
+import com.example.assignment.exception.CustomerNotFoundException;
 import com.example.assignment.repo.UserRepo;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -37,7 +37,7 @@ public class TransactionService {
       meterRegistry.counter("transaction.user.error").increment();
       String message = String.format("User %s not present in DB", userId);
       log.error("{}", message);
-      throw new ResourceNotFoundException(message);
+      throw new CustomerNotFoundException(message);
     }
     userEntity
         .get()

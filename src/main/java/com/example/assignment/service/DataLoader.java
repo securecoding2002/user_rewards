@@ -1,6 +1,6 @@
 package com.example.assignment.service;
 
-import com.example.assignment.domain.UserV1;
+import com.example.assignment.domain.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,10 +41,7 @@ public class DataLoader {
         String[] userDetails = line.split(",");
         if (userDetails.length == 2 && !userDetails[0].equals("userId")) {
           userService.addUser(
-              UserV1.builder()
-                  .userId(userDetails[0].trim())
-                  .userName(userDetails[1].trim())
-                  .build());
+              User.builder().userId(userDetails[0].trim()).userName(userDetails[1].trim()).build());
         }
       }
       while ((line = transactionBr.readLine()) != null) {

@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.example.assignment.AssignmentSpringTest;
-import com.example.assignment.domain.UserV1;
+import com.example.assignment.domain.User;
 import com.example.assignment.entity.UserEntity;
-import com.example.assignment.exception.ResourceNotFoundException;
+import com.example.assignment.exception.CustomerNotFoundException;
 import com.example.assignment.repo.UserRepo;
 import java.time.LocalDate;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class TransactionServiceTest {
 
   @Test
   public void addTransaction_ExistingUser_TransactionAdded() {
-    UserV1 user = UserV1.builder().userId("id").userName("name").build();
+    User user = User.builder().userId("id").userName("name").build();
     UserEntity persistedUser = userService.addUser(user);
     transactionService.addTransactionByUserId(persistedUser.getUserId(), 200d, LocalDate.now());
     assertEquals(
@@ -37,7 +37,7 @@ public class TransactionServiceTest {
   @Test
   public void addTransaction_UserNotPresent_ExceptionThrown() {
     assertThrows(
-        ResourceNotFoundException.class,
+        CustomerNotFoundException.class,
         () -> transactionService.addTransactionByUserId("not_present", 200d, LocalDate.now()));
   }
 

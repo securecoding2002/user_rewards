@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class RewardSummaryV1 {
+public class RewardSummary {
   private String userId;
   private YearMonth startDate;
   private YearMonth endDate;

@@ -1,6 +1,6 @@
 package com.example.assignment.service;
 
-import com.example.assignment.domain.UserV1;
+import com.example.assignment.domain.User;
 import com.example.assignment.entity.UserEntity;
 import com.example.assignment.repo.UserRepo;
 import io.micrometer.core.annotation.Timed;
@@ -23,12 +23,12 @@ public class UserService {
   /**
    * Register new user with DB
    *
-   * @param user {@link UserV1} user details
+   * @param user {@link User} user details
    * @return {@link UserEntity}
    */
   @Transactional
   @Timed
-  public UserEntity addUser(UserV1 user) {
+  public UserEntity addUser(User user) {
     log.debug("adding new user with user id {}", user.getUserId());
     return userRepo.save(
         UserEntity.builder().userId(user.getUserId()).userName(user.getUserName()).build());
@@ -53,9 +53,9 @@ public class UserService {
    */
   @Timed
   @Transactional(readOnly = true)
-  public List<UserV1> findAllUsers() {
+  public List<User> findAllUsers() {
     return userRepo.findAll().stream()
-        .map(userEntity -> modelMapper.map(userEntity, UserV1.class))
+        .map(userEntity -> modelMapper.map(userEntity, User.class))
         .collect(Collectors.toList());
   }
 }

@@ -18,9 +18,9 @@ import org.springframework.web.context.request.WebRequest;
 public class AssignmentControllerAdvice {
   private final MeterRegistry meterRegistry;
 
-  @ExceptionHandler({ResourceNotFoundException.class})
+  @ExceptionHandler({CustomerNotFoundException.class})
   public ResponseEntity<Object> handleResourceNotFoundException(
-      ResourceNotFoundException ex, WebRequest request) {
+      CustomerNotFoundException ex, WebRequest request) {
     Map<String, Object> body = new LinkedHashMap<>();
     body.put("timestamp", LocalDateTime.now());
     body.put("message", ex.getMessage());

@@ -10,7 +10,7 @@ import lombok.NonNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserV1 {
+public class User {
   @NonNull private String userId;
   @NonNull private String userName;
 }

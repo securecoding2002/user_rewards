@@ -1,9 +1,9 @@
 package com.example.assignment.service;
 
-import com.example.assignment.domain.RewardSummaryV1;
+import com.example.assignment.domain.RewardSummary;
 import com.example.assignment.entity.TransactionEntity;
 import com.example.assignment.entity.UserEntity;
-import com.example.assignment.exception.ResourceNotFoundException;
+import com.example.assignment.exception.CustomerNotFoundException;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.YearMonth;
 import java.util.Optional;
@@ -24,15 +24,15 @@ public class RewardsService {
    * generates monthly rewards summary total
    *
    * @param userId user id for reward summary
-   * @return {@link RewardSummaryV1} Monthly group reward summary
+   * @return {@link RewardSummary} Monthly group reward summary
    */
-  public RewardSummaryV1 getRewards(String userId) {
+  public RewardSummary getRewards(String userId) {
     Optional<UserEntity> user = userService.findByUserId(userId);
     if (user.isEmpty()) {
       meterRegistry.counter("transaction.user.error").increment();
       String message = String.format("User %s not present in DB", userId);
       log.error("{}", message);
-      throw new ResourceNotFoundException(message);
+      throw new CustomerNotFoundException(message);
     }
     TreeMap<YearMonth, Double> rewardsByMonth =
         user.get().getTransactions().parallelStream()
@@ -42,8 +42,8 @@ public class RewardsService {
                     TreeMap::new,
                     Collectors.summingDouble(TransactionEntity::getRewards)));
 
-    RewardSummaryV1 summary =
-        RewardSummaryV1.builder()
+    RewardSummary summary =
+        RewardSummary.builder()
             .userId(userId)
             .rewardDetails(rewardsByMonth)
             .totalRewards(0.0)
