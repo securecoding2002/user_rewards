@@ -35,7 +35,7 @@ public class RewardsService {
       throw new ResourceNotFoundException(message);
     }
     TreeMap<YearMonth, Double> rewardsByMonth =
-        user.get().getTransactions().stream()
+        user.get().getTransactions().parallelStream()
             .collect(
                 Collectors.groupingBy(
                     t -> YearMonth.from(t.getTransactionDate()),
@@ -52,7 +52,7 @@ public class RewardsService {
       summary.setStartDate(rewardsByMonth.firstKey());
       summary.setEndDate(rewardsByMonth.lastKey());
       summary.setTotalRewards(
-          rewardsByMonth.values().stream().mapToDouble(Double::doubleValue).sum());
+          rewardsByMonth.values().parallelStream().mapToDouble(Double::doubleValue).sum());
     }
     return summary;
   }
