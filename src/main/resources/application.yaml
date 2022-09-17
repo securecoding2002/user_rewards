@@ -10,6 +10,8 @@ spring:
             enabled: true
 data:
     load:
+        user-input: input/users.txt
+        transaction-input: input/transactions.txt
         enabled: true
 management:
     endpoints:

@@ -8,7 +8,6 @@ import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.LocalDate;
 import java.util.Optional;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +24,14 @@ public class TransactionService {
 
   /**
    * adds transaction for the user id.
+   *
    * @param userId user id
-   * @param amount amount spent
-   * @Thorws InvalidRequestException for invalid user
+   * @param amount amount spent @Thorws InvalidRequestException for invalid user
    */
   @Timed
   @Transactional
-  public void addTransactionByUserId(@NonNull String userId, @NonNull Double amount, @NonNull LocalDate transactionDate) {
+  public void addTransactionByUserId(
+      @NonNull String userId, @NonNull Double amount, @NonNull LocalDate transactionDate) {
     Optional<UserEntity> userEntity = userService.findByUserId(userId);
     if (userEntity.isEmpty()) {
       meterRegistry.counter("transaction.user.error").increment();
@@ -42,7 +42,10 @@ public class TransactionService {
     userEntity
         .get()
         .getTransactions()
-        .add(TransactionEntity.builder().transactionDate(transactionDate).amount(amount)
+        .add(
+            TransactionEntity.builder()
+                .transactionDate(transactionDate)
+                .amount(amount)
                 .rewards(calculateRewards(amount))
                 .build());
     userRepo.save(userEntity.get());
@@ -50,13 +53,14 @@ public class TransactionService {
 
   /**
    * calculates rewards for the amount spent. Returns 0 for any negative amount
+   *
    * @param price input prices
    * @return rewards
    */
   public Double calculateRewards(Double price) {
     if (price > 100) {
-      return Math.round((2 * (price - 100) + 50)* 100 )/ 100.0d;
-    } else if(price > 50) {
+      return Math.round((2 * (price - 100) + 50) * 100) / 100.0d;
+    } else if (price > 50) {
       return Math.round(price - 50) * 100 / 100d;
     }
     return 0.00;

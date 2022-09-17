@@ -1,0 +1,10 @@
+spring:
+    jpa:
+        show-sql: true
+    datasource:
+        url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+        username: sa
+        password: sa
+data:
+    load:
+        enabled: true

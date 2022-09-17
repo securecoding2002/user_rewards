@@ -32,4 +32,3 @@ public class TransactionEntity {
   @Column(nullable = false)
   Double rewards;
 }
-

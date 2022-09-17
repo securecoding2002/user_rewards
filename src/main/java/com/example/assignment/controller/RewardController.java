@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class RewardController {
-    private final RewardsService rewardsService;
+  private final RewardsService rewardsService;
 
-    @GetMapping(path = "/{userId}")
-    @Timed
-    @Operation(description = "loads rewards for given user id")
-    public ResponseEntity<RewardSummaryV1> getRewardSummary(@PathVariable String userId) {
-        return ResponseEntity.ok().body(rewardsService.getRewards(userId));
-    }
-
+  @GetMapping(path = "/{userId}")
+  @Timed
+  @Operation(description = "loads rewards for given user id")
+  public ResponseEntity<RewardSummaryV1> getRewardSummary(@PathVariable String userId) {
+    return ResponseEntity.ok().body(rewardsService.getRewards(userId));
+  }
 }
